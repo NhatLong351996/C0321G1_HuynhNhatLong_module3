@@ -199,7 +199,7 @@ value(1,'Nguyen Van Vinh','2002-08-12','110454678','0694509356','Vinh@gmail.com'
 insert into khachhang(IDLoaiKhach,HoTen,NgaySinh,SoCMND,SDT,Email,DiaChi)
 value(1,'Tran Nga','2001-08-12','111234678','0987659356','Trannga2@gmail.com','Da Nang');
 insert into khachhang(IDLoaiKhach,HoTen,NgaySinh,SoCMND,SDT,Email,DiaChi)
-value(1,'Tran Giàu','2001-08-12','101234678','0987651356','Trangiau2@gmail.com','Da Nang');
+value(2,'Tran Giàu','2001-08-12','101234678','0987651356','Trangiau2@gmail.com','Da Nang');
 
 
  insert into hopdong(IDNhanVien,IDKhachHang,IDDichVu,NgayLamHopDong,NgayKetThuc,TienDatCoc)
@@ -390,9 +390,44 @@ from hopdong
 where year(NgayLamHopDong) between 2017 and 2019);
  
 -- 17.Cập nhật thông tin những khách hàng có TenLoaiKhachHang từ  Platinium lên Diamond,
--- chỉ cập nhật những khách hàng đã từng đặt phòng với tổng Tiền thanh toán trong năm 2019
+-- chỉ cập nhật những khách hàng đã từng đặt phòng với tổng Tiền thanh toán trong năm 2021
 -- là lớn hơn 10.000.000 VNĐ. 
+update khachhang
+set IDLoaiKhach =1
+where IDKhachHang in (
+select IDKhachHang 
+from hopdong hd join dichvu dv on hd.IDDichVu=dv.IDDichVu
+where year(NgayLamHopDong)=2021
+group by hd.IDKhachHang
+having sum(dv.ChiPhiThue)>10000000
+);
+
+-- 18.	Xóa những khách hàng có hợp đồng trước năm 2019 (chú ý ràngbuộc giữa các bảng).
+delete from khachhang
+where IDKhachHang in (select IDKhachHang from hopdong where year(NgayLamHopDong)<2019);
+
+-- 19.Cập nhật giá cho các Dịch vụ đi kèm được sử dụng trên 1 lần trong năm 2021 lên gấp đôi.
+update dichvudikem
+set Gia = Gia*2
+where IDDichVuDiKem in (
+select IDDichVuDiKem 
+from hopdongchitiet hdct right join hopdong hd on hdct.IDHopDong=hd.IDHopDong
+where year(hd.NgayLamHopDong)=2021
+group by IDDichVuDiKem
+having count(IDHopDongChiTiet)>1
+);
+
+-- 20.Hiển thị thông tin của tất cả các Nhân viên và Khách hàng có trong hệ thống, 
+-- thông tin hiển thị bao gồm ID (IDNhanVien, IDKhachHang), HoTen, Email, SoDienThoai, 
+-- NgaySinh, DiaChi.
+select IDNhanVien as ID, HoTen,Email,SDT,NgaySinh,DiaChi
+from nhanvien
+union all
+select IDKhachHang, HoTen,Email,SDT,NgaySinh,DiaChi
+from khachhang;
  
- 
+ -- 21.	Tạo khung nhìn có tên là V_NHANVIEN để lấy được thông tin của tất cả các nhân viên
+ -- có địa chỉ là “Hải Châu” và đã từng lập hợp đồng cho 1 hoặc nhiều Khách hàng bất kỳ 
+ -- với ngày lập hợp đồng là “12/12/2019”
 
 
