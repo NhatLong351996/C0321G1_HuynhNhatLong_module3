@@ -167,7 +167,7 @@ value ('Villa cao cap', 500, 9, 10, 20000000, 4, 1, 'Còn khách');
 
 insert into nhanvien(HoTen,IDViTri,IDTrinhDo,IDBoPhan,NgaySinh,SoCMND,Luong,SDT,Email,DiaChi)
 value('Huynh Nhat Long',1,1,1,'1996-05-03','201743987','5000000','0384339012',
-'Longhaivan@gmail.com','K30/9 Tran Huy Lieu');
+'Longhaivan@gmail.com','Hai Chau');
 insert into nhanvien(HoTen,IDViTri,IDTrinhDo,IDBoPhan,NgaySinh,SoCMND,Luong,SDT,Email,DiaChi)
 value('Huynh Van Toan',1,2,3,'2000-07-03','201345987','6000000','03345339012',
 'Toanhaivan@gmail.com','K30/5 OngIchDuong');
@@ -179,7 +179,7 @@ value('Nguyen Truong Khanh',3,3,3,'1991-09-09','290346987','12000000','053409901
 'Khanhvan@gmail.com','H30/5 IchDuong');
 insert into nhanvien(HoTen,IDViTri,IDTrinhDo,IDBoPhan,NgaySinh,SoCMND,Luong,SDT,Email,DiaChi)
 value('Nguyen Vo Dung',3,3,3,'1991-09-09','290340987','1000000','0539999019',
-'Vodung@gmail.com','U30/9 IchDuongStr');
+'Vodung@gmail.com','Hai Chau');
 
 insert into loaikhach(TenLoaiKhach)
 value('Diamond'),
@@ -428,6 +428,64 @@ from khachhang;
  
  -- 21.	Tạo khung nhìn có tên là V_NHANVIEN để lấy được thông tin của tất cả các nhân viên
  -- có địa chỉ là “Hải Châu” và đã từng lập hợp đồng cho 1 hoặc nhiều Khách hàng bất kỳ 
- -- với ngày lập hợp đồng là “12/12/2019”
+ -- với ngày lập hợp đồng là “10/06/2021”
+ create view V_NHANVIEN as
+ select * from nhanvien where DiaChi = 'Hai Chau' and IDNhanVien in 
+ (select IDNhanVien 
+ from hopdong 
+ where NgayLamHopDong = '2021-06-10');
+ select * from V_NHANVIEN;
+ 
+ -- 22.	Thông qua khung nhìn V_NHANVIEN thực hiện cập nhật địa chỉ thành “Liên Chiểu”
+ -- đối với tất cả các Nhân viên được nhìn thấy bởi khung nhìn này.
+ update V_NHANVIEN
+ set DiaChi = 'Liên Chiểu';
+ 
+ -- 23.	Tạo Clustered Index có tên là IX_KHACHHANG trên bảng Khách hàng.
+-- Giải thích lý do và thực hiện kiểm tra tính hiệu quả của việc sử dụng INDEX
+alter table khachhang add index IX_KHACHHANG (IDKhachHang);
+explain select * from khachhang where IDKhachHang = 3;
+alter table khachhang drop index IX_KHACHHANG;
+
+-- 24.Tạo Non-Clustered Index có tên là IX_SoDT_DiaChi trên các cột SODIENTHOAI và DIACHI
+--  trên bảng KHACH HANG và kiểm tra tính hiệu quả tìm kiếm sau khi tạo Index.
+alter table khachhang add index IX_SoDT_DiaChi (SDT,DiaChi);
+explain select * from khachhang where SDT='0694559356' and DiaChi = 'Da Nang';
+
+-- 25.	Tạo Store procedure Sp_1 Dùng để xóa thông tin của một Khách hàng nào đó
+--  với Id Khách hàng được truyền vào như là 1 tham số của Sp_1
+
+delimiter //
+create procedure Sp_1 (in param int)
+begin
+delete from khachhang where IDKhachHang = param;
+end //
+delimiter ;
+
+call Sp_1 (5);
+select * from khachhang;
+
+-- 26.Tạo Store procedure Sp_2 Dùng để thêm mới vào bảng HopDong với yêu cầu Sp_2 phải thực hiện
+-- kiểm tra tính hợp lệ của dữ liệu bổ sung, với nguyên tắc không được trùng khóa chính 
+-- và đảm bảo toàn vẹn tham chiếu đến các bảng liên quan.
+
+delimiter //
+create procedure Sp_2(param1 int,param2 int,param3 int,param4 int,param5 date,param6 date,param7 int,
+param8 int)
+begin 
+	if(param1 not in (select IDHopDong from hopdong))
+    then insert into hopdong (IDHopDong,IDNhanVien,IDKhachHang,IDDichVu,NgayLamHopDong,
+    NgayKetThuc,TienDatCoc,TongTien)
+    values(param1,param2,param3,param4,param5,param6,param7,param8);
+    end if;
+end//
+DELIMITER ;
+drop procedure Sp_2;
+
+call Sp_2(13,2,3,4,'2019-04-22','2019-07-25',12000,null);
+
+-- 27.	Tạo triggers có tên Tr_1 Xóa bản ghi trong bảng HopDong thì hiển thị tổng số lượng bản ghi
+--  còn lại có trong bảng HopDong ra giao diện console của database
+ 
 
 
