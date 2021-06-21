@@ -1,0 +1,8 @@
+h1 {
+    color: hotpink;
+}
+p {
+    color: lawngreen;
+    width: 50%;
+    border: grey 1px solid;
+}

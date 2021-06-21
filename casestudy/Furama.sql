@@ -486,6 +486,41 @@ call Sp_2(13,2,3,4,'2019-04-22','2019-07-25',12000,null);
 
 -- 27.	Tạo triggers có tên Tr_1 Xóa bản ghi trong bảng HopDong thì hiển thị tổng số lượng bản ghi
 --  còn lại có trong bảng HopDong ra giao diện console của database
+delimiter //
+CREATE trigger Tr_1 after delete on hopdong
+for each row 
+begin
+select concat('so luong con lai: ', count(IDHopDong)) from hopdong into @a;
+
+end//
+DELIMITER ;
+drop trigger Tr_1;
+delete from hopdong where IDHopDong = 11;
+select @a;
+
+-- /* 28.	Tạo triggers có tên Tr_2 Khi cập nhật Ngày kết thúc hợp đồng,
+ -- cần kiểm tra xem thời gian cập nhật có phù hợp hay không, với quy tắc sau:
+ -- Ngày kết thúc hợp đồng phải lớn hơn ngày làm hợp đồng ít nhất là 2 ngày. 
+ -- Nếu dữ liệu hợp lệ thì cho phép cập nhật, nếu dữ liệu không hợp lệ thì in ra thông báo 
+-- Ngày kết thúc hợp đồng phải lớn hơn ngày làm hợp đồng ít nhất là 2 ngày trên console của database */
  
+delimiter //
+create trigger Tr_2 before update on hopdong for each row
+begin
+    set @b = 'Ngày kết thúc hợp đồng phải lớn hơn ngày làm hợp đồng ít nhất là 2 ngày ';
+    if timestampdiff(day,old.NgayLamHopDong,new.NgayKetThuc) <2 then 
+    SIGNAL SQLSTATE '45000' set message_text= @b;
+    end if;
+end//
+DELIMITER ;
+drop trigger Tr_2;
+update hop_dong set ngay_ket_thuc = '2019-05-23' where id_hop_dong =9;
+
+/* 29.	Tạo user function thực hiện yêu cầu sau:
+a.	Tạo user function func_1: Đếm các dịch vụ đã được sử dụng với Tổng tiền là > 2.0000 VNĐ.
+b.	Tạo user function Func_2: Tính khoảng thời gian dài nhất tính từ lúc bắt đầu làm hợp đồng đến 
+lúc kết thúc hợp đồng mà Khách hàng đã thực hiện thuê dịch vụ (lưu ý chỉ xét các khoảng thời 
+gian dựa vào từng lần làm hợp đồng thuê dịch vụ, không xét trên toàn bộ các lần làm hợp đồng). 
+Mã của Khách hàng được truyền vào như là 1 tham số của function này. */
 
 
