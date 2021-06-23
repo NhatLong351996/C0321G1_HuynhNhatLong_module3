@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #header {
+            background-color: black;
+            color: white;
+            padding: 2px;
+            position: relative;
+        }
+        #header ul li {
+            display: inline;
+            margin: 5px;
+        }
+        #header ul{
+            padding: 0;
+        }
+        #login{
+            position: absolute;
+            right: 0;
+        }
+       #body{
+           display: grid;
+           grid-template-columns: 20% 60% 20%;
+       }
+        #menu left{
+            grid-column-start: 1;
+            grid-column-end: 2;
+            margin: 10px;
+            padding: 10px;
+            background-color: grey;
+        }
+        #menu mid{
+            grid-column-start: 2;
+            grid-column-end: 3;
+        }
+        #menu right{
+            grid-column-start: 3;
+            grid-column-end: 4;
+        }
+        #footer{
+            grid-column-start: 2;
+            grid-column-end: 3;
+        }
+        a{
+            display: block;
+            margin: 10px;
+            text-align: center;
+        }
+        .right{
+            text-align: center;
+            background-color: grey;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <ul>
+        <li>Logo</li>
+        <li>Home</li>
+        <li>About</li>
+        <li>Projects</li>
+        <li>Contact</li>
+        <li id="login">Login</li>
+    </ul>
+</div>
+<div id="body">
+    <div id="menu left">
+        <a href="#">link</a>
+        <a href="#">link</a>
+        <a href="#">link</a>
+    </div>
+    <div id="menu mid">
+        <h1>Welcome</h1>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            It has survived not only five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s with the release of
+            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+            like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    </div>
+    <div id="menu right">
+        <p class="right">ADS</p>
+        <p class="right">ADS</p>
+    </div>
+    <div id="footer">
+        <h3>Test</h3>
+        <p>Lorem ipsum</p>
+    </div>
+</div>
+
+</body>
+</html>

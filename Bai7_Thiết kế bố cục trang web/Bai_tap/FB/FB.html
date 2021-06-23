@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        header {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            background-color: #1d73ff;
+            border: black solid 1px;
+            height: 30px;
+        }
+
+        header div {
+            position: relative;
+        }
+
+        header div img {
+            display: block;
+            height: 30px;
+            position: absolute;
+            left: 50%;
+        }
+        #body{
+            display: grid;
+            grid-template-columns: auto auto auto;
+            background-color: black;
+            grid-gap: 10px;
+        }
+        #Bottom{
+            grid-column-start: 2;
+            grid-column-end: 4;
+        }
+        p{
+            color: white;
+        }
+        body{
+            background-color: black;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <div><img src="fb.png" alt=""></div>
+    <div><img src="fb_house.png" alt=""></div>
+    <div><img src="9BDqQflVfXI.png" alt=""></div>
+</header>
+<div id="body">
+    <div id="left">
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+    </div>
+    <div id="mid">
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+
+    </div>
+    <div id="Right">
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+    </div>
+    <div id="Bottom">
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+    </div>
+</div>
+
+</body>
+</html>

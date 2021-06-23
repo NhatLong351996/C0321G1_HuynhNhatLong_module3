@@ -1,0 +1,32 @@
+body{
+    font-family: Arial;
+}
+#menu, #menu ul, #menu  li{
+   position: relative;
+}
+#menu li {
+    position: relative;
+    list-style: none;
+    background-color: black;
+    width:100px;
+    line-height: 30px;
+    padding:0 20px;
+    cursor:pointer;
+    height: 30px;
+}
+#menu li a{
+    text-decoration:none;
+    color: white;
+}
+#menu li:hover{
+    background-color:red;
+}
+#menu ul ul{
+    position: absolute;
+    top:0;
+    left:100px;
+    visibility: hidden;
+}
+#menu ul li:hover ul{
+    visibility:visible;
+}
