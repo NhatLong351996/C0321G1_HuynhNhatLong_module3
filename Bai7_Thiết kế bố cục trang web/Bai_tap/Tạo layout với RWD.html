@@ -10,7 +10,7 @@
             padding: 2px;
             position: relative;
         }
-        #header ul li {
+        #header ul li{
             display: inline;
             margin: 5px;
         }
@@ -28,13 +28,11 @@
         #menu left{
             grid-column-start: 1;
             grid-column-end: 2;
-            margin: 10px;
-            padding: 10px;
-            background-color: grey;
         }
         #menu mid{
             grid-column-start: 2;
             grid-column-end: 3;
+            background-color: white;
         }
         #menu right{
             grid-column-start: 3;
@@ -53,6 +51,7 @@
             text-align: center;
             background-color: grey;
         }
+
     </style>
 </head>
 <body>
@@ -67,12 +66,12 @@
     </ul>
 </div>
 <div id="body">
-    <div id="menu left">
+    <div id="menu left" style="background: grey " >
         <a href="#">link</a>
         <a href="#">link</a>
         <a href="#">link</a>
     </div>
-    <div id="menu mid">
+    <div id="menu mid" >
         <h1>Welcome</h1>
         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
@@ -82,7 +81,7 @@
             Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
             like Aldus PageMaker including versions of Lorem Ipsum.</p>
     </div>
-    <div id="menu right">
+    <div id="menu right" style="background: grey">
         <p class="right">ADS</p>
         <p class="right">ADS</p>
     </div>
