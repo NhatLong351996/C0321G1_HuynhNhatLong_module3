@@ -1,0 +1,12 @@
+dependencies {
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+}
+// https://mvnrepository.com/artifact/javax.servlet/jstl
+implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
+
+------
+<link rel="stylesheet" type="text/css" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
+    <link rel="stylesheet " type="text/css" href="style.css">
+<script src="../bootstrap-4.6.0-dist/jquery/jquery-3.6.0.min.js"></script>
+<script src="../bootstrap-4.6.0-dist/jquery/popper.min.js"></script>
+<script src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
