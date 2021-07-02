@@ -1,12 +1,45 @@
+------------------dependencies-----------------------dependencies---------------------------dependencies-------
 dependencies {
-    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+   compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.23'
 }
-// https://mvnrepository.com/artifact/javax.servlet/jstl
-implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
 
-------
+------bootstrap--------------bootstrap--------------bootstrap--------------bootstrap---------------------------
 <link rel="stylesheet" type="text/css" href="../bootstrap-4.6.0-dist/css/bootstrap.css">
     <link rel="stylesheet " type="text/css" href="style.css">
 <script src="../bootstrap-4.6.0-dist/jquery/jquery-3.6.0.min.js"></script>
 <script src="../bootstrap-4.6.0-dist/jquery/popper.min.js"></script>
 <script src="../bootstrap-4.6.0-dist/js/bootstrap.js"></script>
+--------Connection-------------------------------------------------------------------Connection--------------
+public class DBConnection {
+    private static final String USER_NAME = "root";
+    private static final String PASSWORD = "12345678";
+    private static final String HOST = "localhost";
+    private static final String DATABASE = "demo";
+    private static final String PORT = "3306";
+
+    private static Connection connection;
+
+    public static Connection getConnection () {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://"+HOST+":"+PORT+"/"+DATABASE, USER_NAME, PASSWORD);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return connection;
+    }
+
+    public static void close(){
+        try {
+            if(connection != null){
+                connection.close();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+}
+

@@ -267,7 +267,7 @@ JAVA_OPTS="$JAVA_OPTS $JSSE_OPTS"
 # Register custom URL handlers
 # Do this here so custom URL handles (specifically 'war:...') can be used in the security policy
 JAVA_OPTS="$JAVA_OPTS -Djava.protocol.handler.pkgs=org.apache.catalina.webresources"
-
+set "JAVA_OPTS=-Dsolr.solr.home=D:\solr\solr"
 # Check for the deprecated LOGGING_CONFIG
 # Only use it if CATALINA_LOGGING_CONFIG is not set and LOGGING_CONFIG starts with "-D..."
 if [ -z "$CATALINA_LOGGING_CONFIG" ]; then
