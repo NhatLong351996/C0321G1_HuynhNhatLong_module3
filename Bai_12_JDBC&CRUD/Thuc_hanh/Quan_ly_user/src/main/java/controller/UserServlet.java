@@ -107,6 +107,13 @@ public class UserServlet extends HttpServlet {
             case "findByName":
                 findByName(request,response);
                 break;
+            case "sort":
+                try {
+                    sortByName(request,response);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                break;
             default:
                 try {
                     listUser(request, response);
@@ -115,6 +122,13 @@ public class UserServlet extends HttpServlet {
                 }
                 break;
         }
+    }
+
+    private void sortByName(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+       List<User> userList = userService.sortedListByName();
+       request.setAttribute("userList",userList);
+       RequestDispatcher dispatcher = request.getRequestDispatcher("/user/list.jsp");
+       dispatcher.forward(request,response);
     }
 
     private void findByName(HttpServletRequest request, HttpServletResponse response) throws IOException {

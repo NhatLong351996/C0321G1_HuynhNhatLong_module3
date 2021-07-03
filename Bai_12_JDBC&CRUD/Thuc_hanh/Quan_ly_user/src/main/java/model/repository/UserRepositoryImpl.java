@@ -168,4 +168,31 @@ public class UserRepositoryImpl implements UserRepository{
 
         return user;
     }
+
+    @Override
+    public List<User> sortedListByName() throws SQLException {
+        List<User> users = new ArrayList<>();
+        Connection connection = DBConnection.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet rs=null;
+        if (connection!=null){
+            try {
+                preparedStatement = connection.prepareStatement("select * from users order by name ;");
+                rs= preparedStatement.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("name");
+                    String email = rs.getString("email");
+                    String country = rs.getString("country");
+                    users.add(new User(id, name, email, country));
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }finally {
+                rs.close();
+                preparedStatement.close();
+            }
+        }
+        return users;
+    }
 }

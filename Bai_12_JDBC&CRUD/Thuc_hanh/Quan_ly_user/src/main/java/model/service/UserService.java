@@ -18,4 +18,5 @@ public interface UserService {
 
     public boolean updateUser(User user) throws SQLException;
     public User selectUserByName(String _name) throws SQLException;
+    public List<User> sortedListByName() throws SQLException;
 }

@@ -38,4 +38,9 @@ public class UserServiceImpl implements UserService{
     public User selectUserByName(String _name) throws SQLException {
         return userRepository.selectUserByName(_name);
     }
+
+    @Override
+    public List<User> sortedListByName() throws SQLException {
+        return userRepository.sortedListByName();
+    }
 }
