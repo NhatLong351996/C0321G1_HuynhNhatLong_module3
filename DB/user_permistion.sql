@@ -33,3 +33,26 @@ insert into Permision(id, name) values(2, 'edit');
 insert into Permision(id, name) values(3, 'delete');
 insert into Permision(id, name) values(4, 'view');
 
+DELIMITER $$
+CREATE PROCEDURE update_user(
+IN _id int,
+IN _name varchar(50),
+IN _email varchar(50),
+IN _country varchar(50)
+)
+BEGIN
+   update users
+   set name = _name,email=_email,country=_country
+   where id = _id;
+    END$$
+DELIMITER ;
+call update_user(3,'longg','huyhaivan@gmail.com','Da Nang')
+
+DELIMITER $$
+CREATE PROCEDURE delete_user(IN _id int)
+BEGIN
+  delete from users where id = _id;
+    END$$
+DELIMITER ;
+
+
