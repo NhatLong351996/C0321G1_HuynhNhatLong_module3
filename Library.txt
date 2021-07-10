@@ -42,4 +42,37 @@ public class DBConnection {
     }
 
 }
+----------------------------conect
+   Connection connection = DBConnection.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection!=null){
+            try {
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                try {
+                    resultSet.close();
+                    preparedStatement.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+        DBConnection.close();
+        return null;
 
+-------Phan trang---------------
+<script src="jquery/jquery-3.5.1.min.js"></script>
+    <script src="datatables/js/jquery.dataTables.min.js"></script>
+    <script src="datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#tableStudent').dataTable( {
+                "dom": 'lrtip',
+                "lengthChange": false,
+                "pageLength": 5
+            } );
+        } );
+    </script>
